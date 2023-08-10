@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+// import { DataContext } from "../Components/TheContext";
 import { DataContext } from "../Components/TheContext";
 
 const Login = () => {
@@ -18,7 +19,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    // setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
+    setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
