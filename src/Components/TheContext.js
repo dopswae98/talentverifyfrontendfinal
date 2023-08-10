@@ -97,14 +97,14 @@ const DataContextProvider = ({ children }) => {
   //   setIsAuthenticated(false);
   // };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setIsAuthenticated(true);
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   const login = (token) => {
     localStorage.setItem("token", token);

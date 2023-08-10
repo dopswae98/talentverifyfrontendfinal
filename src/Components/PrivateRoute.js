@@ -6,7 +6,7 @@ import { DataContext } from "./TheContext";
 function PrivateRoute({ element }) {
   const { fakeAuthService } = useContext(DataContext);
 
-  if (fakeAuthService.isAuthenticated) {
+  if (!fakeAuthService.isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
