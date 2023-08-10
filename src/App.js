@@ -13,7 +13,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import { DataContextProvider } from "./Components/TheContext";
 import PrivateRoute from "./Components/PrivateRoute";
 
-import LoginPage from "./Pages/LoginPage";
+// import LoginPage from "./Pages/LoginPage";
 // import PrivateRoute from "./Components/PrivateRoute";
 import Dashboard from "./Pages/Dashboard";
 import Notfound from "./Pages/Notfound";
