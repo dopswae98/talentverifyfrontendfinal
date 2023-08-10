@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
+    // setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
