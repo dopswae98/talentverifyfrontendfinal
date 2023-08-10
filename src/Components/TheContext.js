@@ -83,6 +83,7 @@ const DataContextProvider = ({ children }) => {
     },
   });
 
+  //the useeffect problem
   // const [isAuthenticated, setIsAuthenticated] = useState(
   //   () => !!localStorage.getItem("token") // Check if token exists in storage
   // );
