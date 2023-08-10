@@ -31,7 +31,7 @@ function App() {
   return (
     <DataContextProvider>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<Login />} />
         {/* <Route path="/home" element={<PrivateRoute />}> */}
         <Route path="/home" element={<PrivateRoute />}>
           <Route path="/home" element={<Dashboard />} />
