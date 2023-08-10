@@ -102,7 +102,7 @@ const DataContextProvider = ({ children }) => {
     if (token) {
       setIsAuthenticated(true);
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [navigate]);
 

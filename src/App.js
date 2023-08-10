@@ -6,7 +6,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
 import "./App.css";
-import Homepage from "./Pages/Homepage";
+// import Homepage from "./Pages/Homepage";
 import Login from "./Pages/Login";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
