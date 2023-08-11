@@ -6,6 +6,7 @@ import React, { useContext, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { DataContext } from "./TheContext";
 // import products from "../assets/data/products";
+import logo from "../Images/talentlogo.png";
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
@@ -60,8 +61,11 @@ const NavbarComponent = () => {
             {/* <a className="logo navbar-brand" href="/#"> */}
             {/* <img src={logo} alt="Wholight Trading Logo" /> */}
             {/* </a> */}
-            <span className="ms-2 fw-bold">
-              Talent <span className="text-danger">Verify</span>{" "}
+            <span className="">
+              <img src={logo} alt="logo" height={47} width={47} />
+            </span>
+            <span className="fw-bold">
+              Talent <span className="text-success">Verify</span>{" "}
             </span>
           </Link>
           <div className="acc-cart-center position-relative ms-3">

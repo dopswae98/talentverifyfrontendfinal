@@ -13,6 +13,8 @@ const Dashboard = () => {
             <Link
               className="link bg-danger d-flex align-items-center justify-content-center h-100 py-5 rounded text-center fw-bold text-white"
               to="/home/companieslist"
+              style={{}}
+              id="item-link"
             >
               Companies List
             </Link>

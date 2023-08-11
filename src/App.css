@@ -30,14 +30,23 @@ Link {
   text-decoration: none;
   color: black;
   font-size: 20px;
+  overflow: hidden;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgb(3, 78, 54) 0%, rgb(3, 70, 39) 35%, rgb(3, 100, 119) 100%);
 }
 
+.link:hover {
+  transform: scale(1.05);
+  transition: 0.6s ease-in-out;
+  box-shadow: rgba(6, 220, 220, 0.7) 0px 10px 50px;
+  box-shadow: rgba(248, 85, 85, 0.16) 0px 1px 4px, rgb(255, 171, 2) 0px 0px 0px 3px;
+}
 .dashlink_container .col-md-4 {
   margin-bottom: 2rem;
 }
 
 .nav-item .nav-link {
-  color: rgb(225, 5, 5) !important;
+  color: rgb(4, 119, 98) !important;
 }
 
 form .search {
@@ -73,9 +82,10 @@ form .search {
   position: absolute;
   display: block;
   bottom: 0;
-  background-color: rgb(236, 59, 15);
+  background-color: rgb(241, 212, 48);
   height: 5px;
-  width: 100%;
+  /* width: 100%; */
+    width: 87%;
   opacity: 0;
   transition: 0.3s ease-in-out 0.20s;
 }
@@ -101,6 +111,7 @@ html {
 .box_shadow1 {
   box-shadow: rgba(253, 147, 54, 0.2) 0px 7px 29px 0px;
 }
+
 
 .login_button {
   background-color: rgba(0, 62, 58, 1) !important;

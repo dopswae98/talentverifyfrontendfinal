@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { DataContext } from "../Components/TheContext";
 import { DataContext } from "../Components/TheContext";
+import logo from "../Images/talentlogo.png";
 
 const Login = () => {
   const { fakeAuthService, setFakeAuthService } = useContext(DataContext);
@@ -70,7 +71,10 @@ const Login = () => {
           ></button>
         </div>
         <h1 className="fw-bold text-center mt-3">
-          <span className="text-danger">My</span> Todo{" "}
+          <span className="me-2">
+            <img src={logo} alt="logo" height={47} width={47} />
+          </span>
+          <span className="text-success">Talent</span> Verify{" "}
           <span className="text-success"> App</span>
         </h1>
         <section className="form-section bg-light mx-3 mx-md-0">
