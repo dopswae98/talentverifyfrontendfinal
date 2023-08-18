@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -28,7 +29,7 @@ const Login = () => {
   // the working code for authentication from an api *****
   const handleLogin = (event) => {
     event.preventDefault();
-
+    setLoading(true);
     axios
 
       // .post("http://127.0.0.1:8000/api/login/", formData)
@@ -40,16 +41,34 @@ const Login = () => {
         // navigate("/home", { overwriteLastHistoryEntry: true });
         navigate("/home");
         // redirect("/home");
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setFeedback(false);
+        setLoading(false);
       });
   };
 
   return (
     <div>
-      <div className="bg-light overflow-hidden vh-100">
+      <div className="bg-light position-relative overflow-hidden vh-100">
+        <div
+          className="loading position-absolute d-flex align-item-center justify-content-center"
+          style={{ zIndex: 10 }}
+        >
+          {loading && (
+            <div className="d-flex align-items-center loading_modal justify-content-center vw-100 vh-100 bg-">
+              <div
+                class="spinner-border bg-success text-warning text-center"
+                role="status"
+                style={{ height: "6rem", width: "6rem" }}
+              >
+                <span class="sr-only fw-bold text-warning"></span>
+              </div>
+            </div>
+          )}
+        </div>
         <div
           className={
             feedback === true

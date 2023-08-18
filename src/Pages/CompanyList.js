@@ -6,11 +6,18 @@ import NavbarComponent from "../Components/NavbarComponent";
 import SearchComponent from "../Components/SearchComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FooterComponent from "../Components/FooterComponent";
+import CompanyListTable from "../Components/CompanyListTable";
 
 const CompanyList = () => {
   const [companies, setCompanies] = useState([]);
-  const { message, formData, setFormData, setCompanyDetails } =
-    useContext(DataContext);
+  const {
+    message,
+    formData,
+    setFormData,
+    setCompanyDetails,
+    loading,
+    setLoading,
+  } = useContext(DataContext);
   const [query, setQuery] = useState("");
   const [addedFeedback, setAddedFeedback] = useState(null);
 
@@ -80,6 +87,7 @@ const CompanyList = () => {
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -110,17 +118,6 @@ const CompanyList = () => {
       item.email.toLowerCase().includes(query.toLowerCase()) ||
       item.contact_phone.includes(query)
   );
-  // date_of_registration: "",
-  //   company_registration_number: "",
-  //   address: "",
-  //   contact_person: "",
-  //   departments: "",
-  //   num_employees: "",
-  //   employees: "",
-  //   contact_phone: "",
-  //   email:
-  // setCompanies(searchedProducts);
-  // console.log(searchedProducts);
 
   useEffect(() => {
     api();
@@ -135,8 +132,7 @@ const CompanyList = () => {
       <section className="nav-section bg-warning">
         <NavbarComponent />
       </section>
-      {/* <h1>Company List</h1> */}
-      {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
+
       <section className="search-section pt-4">
         <div className="">
           <div className="row mx-1 mx-md-0">
@@ -146,13 +142,6 @@ const CompanyList = () => {
                 role="search"
               >
                 <div className="left_search d-flex w-100 justify-content-center flex-grow align-items-center ">
-                  {/* <FontAwesomeIcon
-                className="ms-2"
-                icon="fa-search"
-                color="black"
-                width={25}
-                height={25}
-              /> */}
                   <input
                     className="search-input form-control me-2 bg-transparent border-0 outline-none"
                     type="search"
@@ -184,57 +173,12 @@ const CompanyList = () => {
         className="table py-5 rounded overflow-md-hidden overflow-auto"
         style={{ fontSize: 11 }}
       >
-        <table className="table text-center rounded">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Company Name</th>
-              <th scope="col">Date Registered</th>
-              <th scope="col">Company Registration Number</th>
-              <th scope="col">Address</th>
-              <th scope="col">Contact Person</th>
-              <th scope="col">Contact Phone</th>
-              <th scope="col">List Of departments</th>
-              <th scope="col">Number of Employees</th>
-              <th scope="col">Email Address</th>
-              <th scope="col">Edit/Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchedProducts.map((company, id) => {
-              return (
-                <tr key={id} className="text-center bg-danger">
-                  <th scope="row">{id + 1}</th>
-                  <td className="text-danger">{company.name}</td>
-                  <td>{company.date_of_registration}</td>
-                  <td>{company.company_registration_number}</td>
-                  <td>{company.address}</td>
-                  <td>{company.contact_person}</td>
-                  <td>{company.contact_phone}</td>
-                  <td>{company.departments}</td>
-                  <td>{company.num_employees}</td>
-                  <td>{company.email}</td>
-                  <td>
-                    <Link
-                      className=""
-                      to={`/home/companieslist/${company.id}`}
-                      onClick={() => EditCompany(company)}
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      className=" text-white bg-danger ms-1 rounded p-1"
-                      onClick={() => deleteCompany(company.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <CompanyListTable
+          loading={loading}
+          searchedProducts={searchedProducts}
+          EditCompany={EditCompany}
+          deleteCompany={deleteCompany}
+        />
       </section>
       <section className="footer-section">
         <FooterComponent />

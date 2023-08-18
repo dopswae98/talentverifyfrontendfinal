@@ -16,6 +16,8 @@ const DataContextProvider = ({ children }) => {
   const [companyDetails, setCompanyDetails] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState([]);
   const [auth, setAuth] = useState({ token: false });
+  const [loading, setLoading] = useState(true);
+  const [companyLoading, setCompanyLoading] = useState(true);
   // const [isauthenticated, setIsAuthenticated] = useState(second)
   const [formData, setFormData] = useState({
     name: "",
@@ -66,6 +68,7 @@ const DataContextProvider = ({ children }) => {
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
+        setCompanyLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -140,6 +143,10 @@ const DataContextProvider = ({ children }) => {
     employeeDetails,
     setEmployeeDetails,
     companiesApi,
+    loading,
+    setLoading,
+    companyLoading,
+    setCompanyLoading,
     /* add more values as needed */
   };
 
