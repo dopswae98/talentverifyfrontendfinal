@@ -129,9 +129,10 @@ const EmployeeList = () => {
 
   return (
     <div
-      className="bg-light overflow-hidden vw-100 vw-md-auto container-xxl"
+      className=" relatives bg-light overflow-hidden vw-100 vw-md-auto container-xxl"
       style={{ minHeight: "100vh" }}
     >
+      
       <NavbarComponent />
       {/* <h1>Company List</h1> */}
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
@@ -185,7 +186,16 @@ const EmployeeList = () => {
         className="table py-5 rounded overflow-md-hidden overflow-auto"
         style={{ fontSize: 11 }}
       >
-        <table className="table text-center rounded">
+        <table className="table text-center position-relative rounded">
+        {!formData && (
+          <div className="loader w-100 h-100 position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+            <div
+              className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+              role="status"
+              style={{ fontSize: 30, height: 100, width: 10 }}
+            ></div>
+          </div>
+        )}
           <thead>
             <tr>
               <th scope="col">#</th>

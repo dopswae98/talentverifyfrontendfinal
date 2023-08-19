@@ -10,6 +10,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState(null);
+  const [errorText, setErrorText] = useState(null);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
@@ -28,6 +29,14 @@ const Login = () => {
   // the working code for authentication from an api *****
   const handleLogin = (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    if (!formData.username || !formData.password) {
+      setErrorText("Please Enter Your credentials");
+      setIsLoading(false)
+      return;
+    } else {
+      setErrorText(null);
+    }
 
     axios
 
@@ -35,15 +44,25 @@ const Login = () => {
       .post("https://talentbackend.onrender.com/api/login/", formData)
       .then((response) => {
         setFakeAuthService({ ...fakeAuthService, isAuthenticated: true });
-
+        setIsLoading(false);
         setFeedback(true);
         // navigate("/home", { overwriteLastHistoryEntry: true });
         navigate("/home");
         // redirect("/home");
       })
       .catch((error) => {
-        setError(error);
+        // if(error.response.status === 400){
+        //   setError("Please Enter correct Password");
+        //   setFeedback(false);
+        //   console.log(error);
+        //   setIsLoading(false);
+        // }
+        // setError(error);
         setFeedback(false);
+        console.log(error.response);
+        setIsLoading(false);
+        // setError(error.message);
+        setError(error.message);
       });
   };
 
@@ -61,7 +80,8 @@ const Login = () => {
           role="alert"
         >
           <span className="fw-bold ms-1">
-            {feedback ? "Login Success" : `Password Error`}
+            {feedback ? "Login Success" : `${error} `}
+            {errorText ? errorText : errorText}
           </span>
           <button
             type="button"
@@ -70,6 +90,15 @@ const Login = () => {
             aria-label="Close"
           ></button>
         </div>
+        {isLoading && (
+          <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+            <div
+              className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+              role="status"
+              style={{ fontSize: 30, height: 100, width: 10 }}
+            ></div>
+          </div>
+        )}
         <h1 className="fw-bold text-center mt-3">
           <span className="me-2">
             <img src={logo} alt="logo" height={47} width={47} />
