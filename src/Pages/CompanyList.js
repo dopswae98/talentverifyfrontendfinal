@@ -127,7 +127,7 @@ const CompanyList = () => {
   useEffect(() => {
     api();
     // handleSearch();
-  }, []);
+  }, [api]);
 
   return (
     <div
