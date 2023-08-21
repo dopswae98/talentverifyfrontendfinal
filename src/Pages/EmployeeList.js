@@ -12,6 +12,7 @@ const EmployeeList = () => {
   const { message, formData, setFormData, setCompanyDetails } =
     useContext(DataContext);
   const [query, setQuery] = useState("a");
+  const [table_loader, setTable_loader] = useState(true);
   const [addedFeedback, setAddedFeedback] = useState(null);
 
   const [clearFormData, setClearFormData] = useState({
@@ -80,6 +81,7 @@ const EmployeeList = () => {
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
+        setTable_loader(false);
       })
       .catch((error) => {
         console.error(error);
@@ -127,15 +129,29 @@ const EmployeeList = () => {
     // handleSearch();
   }, []);
 
+  // if (formData === undefined || null) {
+  //   setLoading(true);
+  // } else {
+  //   setLoading(false);
+  // }
+
   return (
     <div
-      className=" relatives bg-light overflow-hidden vw-100 vw-md-auto container-xxl"
+      className=" relative bg-light overflow-hidden vw-100 vw-md-auto container-xxls"
       style={{ minHeight: "100vh" }}
     >
-      
       <NavbarComponent />
       {/* <h1>Company List</h1> */}
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
+      {table_loader && (
+        <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div
+            className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+            role="status"
+            style={{ fontSize: 30, height: 110, width: 110 }}
+          ></div>
+        </div>
+      )}
       <section className="search-section pt-4">
         <div className="">
           <div className="row mx-1 mx-md-0">
@@ -183,19 +199,10 @@ const EmployeeList = () => {
       </section>
 
       <section
-        className="table py-5 rounded overflow-md-hidden overflow-auto"
+        className="table py-5 rounded overflow-md-hidden overflow-auto container-xxl"
         style={{ fontSize: 11 }}
       >
         <table className="table text-center position-relative rounded">
-        {!formData && (
-          <div className="loader w-100 h-100 position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
-            <div
-              className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
-              role="status"
-              style={{ fontSize: 30, height: 100, width: 10 }}
-            ></div>
-          </div>
-        )}
           <thead>
             <tr>
               <th scope="col">#</th>

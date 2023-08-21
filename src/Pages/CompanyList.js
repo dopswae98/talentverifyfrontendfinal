@@ -13,6 +13,7 @@ const CompanyList = () => {
     useContext(DataContext);
   const [query, setQuery] = useState("");
   const [addedFeedback, setAddedFeedback] = useState(null);
+  const [table_loader, setTable_loader] = useState(true);
 
   const [clearFormData, setClearFormData] = useState({
     name: "",
@@ -80,6 +81,7 @@ const CompanyList = () => {
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
+        setTable_loader(false);
       })
       .catch((error) => {
         console.error(error);
@@ -129,9 +131,18 @@ const CompanyList = () => {
 
   return (
     <div
-      className="bg-light overflow-hidden position-relative  container-xxl"
+      className="relative bg-light overflow-hidden position-relative"
       style={{ minHeight: "100vh" }}
     >
+      {table_loader && (
+        <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div
+            className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+            role="status"
+            style={{ fontSize: 30, height: 110, width: 110 }}
+          ></div>
+        </div>
+      )}
       <section className="nav-section bg-warning">
         <NavbarComponent />
       </section>
@@ -181,7 +192,7 @@ const CompanyList = () => {
       </section>
 
       <section
-        className="table py-5 rounded overflow-md-hidden overflow-auto"
+        className="table py-5 rounded overflow-md-hidden overflow-auto container-xxl"
         style={{ fontSize: 11 }}
       >
         <table className="table text-center rounded">

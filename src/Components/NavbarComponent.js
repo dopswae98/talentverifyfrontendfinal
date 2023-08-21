@@ -1,11 +1,6 @@
 import React, { useContext, useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faShoppingBag, faSearch } from "@fortawesome/free-solid-svg-icons";
-// import logo from "../img/wholelitelogo7.png";
-// import { useUserAuth } from "./UserAuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { DataContext } from "./TheContext";
-// import products from "../assets/data/products";
 import logo from "../Images/talentlogo.png";
 
 const NavbarComponent = () => {
@@ -14,40 +9,20 @@ const NavbarComponent = () => {
   const [auth, setAuth] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleLogin() {
-    setIsLoading(true);
-    fakeAuthService.login(() => {
-      setIsLoading(false);
-      // setFakeAuthService({ ...fakeAuthService, isAuthenticated: true });
-      console.log(fakeAuthService);
-      navigate("/dashboard");
-    });
-  }
-
+ 
   const handleLogout = () => {
-    // navigate("/login");
-    // return <Navigate to="/login" replace={true} />;
+    
     fakeAuthService["isAuthenticated"] = false;
     setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
 
-    setAuth(true);
-    // const fakeAuthService = {
-    //   isAuthenticated: false,
-    //   login(callback) {
-    //     this.isAuthenticated = true;
-    //     setTimeout(callback, 100);
-    // //   },
-    //   logout(callback) {
-    //     this.isAuthenticated = true;
-    //     setTimeout(callback, 100);
-    //   },
-    // };
-    // history.pushState("/login");
+  
+    
     console.log("logged out");
-    // navigate("../login", { replace: true });
+    console.log("fake auth", fakeAuthService.isAuthenticated);
+  
     if (
-      // !fakeAuthService.isAuthenticated &&
-      !auth
+      !fakeAuthService.isAuthenticated 
+      
     ) {
       return <Navigate to="/login" replace={true} />;
     }
@@ -58,9 +33,7 @@ const NavbarComponent = () => {
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container">
           <Link className="logo navbar-brand" to="/home">
-            {/* <a className="logo navbar-brand" href="/#"> */}
-            {/* <img src={logo} alt="Wholight Trading Logo" /> */}
-            {/* </a> */}
+            
             <span className="">
               <img src={logo} alt="logo" height={47} width={47} />
             </span>
@@ -69,14 +42,9 @@ const NavbarComponent = () => {
             </span>
           </Link>
           <div className="acc-cart-center position-relative ms-3">
-            {/* <span className="badge bg-secondary rounded-circle">
-              {cart.length}
-            </span> */}
+           
             <i className="fa-regular "></i>
-            {/* <FontAwesomeIcon icon={faShoppingBag} onClick={handleCart} /> */}
-            {/* <span className="ms-2 fw-bold">
-              Talent <span className="text-danger">Verify</span>{" "}
-            </span> */}
+           
           </div>
           <button
             className="navbar-toggler"
@@ -177,11 +145,9 @@ const NavbarComponent = () => {
             </div>
 
             <div className="acc-cart position-relative ms-3">
-              {/* <span className="badge bg-secondary rounded-circle">
-                {cart.length}
-              </span> */}
+             
               <i className="fa-regular "></i>
-              {/* <FontAwesomeIcon icon={faShoppingBag} onClick={handleCart} /> */}
+              
               <span className="ms-1"></span>
             </div>
           </div>

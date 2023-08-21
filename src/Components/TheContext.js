@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +16,9 @@ const DataContextProvider = ({ children }) => {
   const [companyDetails, setCompanyDetails] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState([]);
   const [auth, setAuth] = useState({ token: false });
-  // const [isauthenticated, setIsAuthenticated] = useState(second)
+  const [token, setToken] = useState(true);
+  const [table_loader, setTable_loader] = useState(true);
+
   const [formData, setFormData] = useState({
     name: "",
     date_of_registration: "",
@@ -49,16 +51,6 @@ const DataContextProvider = ({ children }) => {
       .catch((error) => {
         console.error(error);
       });
-  // const api = () =>
-  //   axios
-  //     .get(`https://talentbackend.onrender.com/companies/`)
-  //     .then((response) => {
-  //       setCompanies(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
 
   const api = () =>
     axios
@@ -66,13 +58,14 @@ const DataContextProvider = ({ children }) => {
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
+        setTable_loader(false);
       })
       .catch((error) => {
         console.error(error);
       });
 
   const [fakeAuthService, setFakeAuthService] = useState({
-    isAuthenticated: true,
+    isAuthenticated: localStorage.getItem("token"),
     login(callback) {
       this.isAuthenticated = true;
       setTimeout(callback, 100);
@@ -83,30 +76,7 @@ const DataContextProvider = ({ children }) => {
     },
   });
 
-  //the useeffect problem
-  // const [isAuthenticated, setIsAuthenticated] = useState(
-  //   () => !!localStorage.getItem("token") // Check if token exists in storage
-  // );
-
-  // const login = () => {
-  //   localStorage.setItem("token", "true"); // Replace 'yourAuthToken' with the actual auth token
-  //   setIsAuthenticated(true);
-  // };
-
-  // const logout = () => {
-  //   localStorage.removeItem("token");
-  //   setIsAuthenticated(false);
-  // };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setIsAuthenticated(true);
-  //   } else {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
-
+  localStorage.setItem("token", token);
   const login = (token) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
@@ -120,7 +90,6 @@ const DataContextProvider = ({ children }) => {
   };
 
   const contextValue = {
-    message: "Hello, Context!",
     setFormData,
     formData,
     handleChange,
@@ -140,7 +109,7 @@ const DataContextProvider = ({ children }) => {
     employeeDetails,
     setEmployeeDetails,
     companiesApi,
-    /* add more values as needed */
+    table_loader,
   };
 
   return (

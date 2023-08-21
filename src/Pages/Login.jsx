@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { DataContext } from "../Components/TheContext";
 import { DataContext } from "../Components/TheContext";
 import logo from "../Images/talentlogo.png";
 
@@ -21,6 +20,9 @@ const Login = () => {
   };
 
   useEffect(() => {
+    //initialise isAuthenticated: false so that the user will always be redirected to the
+    // login page even if he enters manually a private route
+    //so that when he logs out and presses back it will not enter a private route
     setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
   }, []);
 
@@ -29,29 +31,26 @@ const Login = () => {
   // the working code for authentication from an api *****
   const handleLogin = (event) => {
     event.preventDefault();
+
     setIsLoading(true);
+    //validate user to provide non empty fields
     if (!formData.username || !formData.password) {
       setErrorText("Please Enter Your credentials");
-      setIsLoading(false)
-      return;
+      setIsLoading(false);
     } else {
       setErrorText(null);
     }
-
+    //post code
     axios
-
-      // .post("http://127.0.0.1:8000/api/login/", formData)
       .post("https://talentbackend.onrender.com/api/login/", formData)
       .then((response) => {
         setFakeAuthService({ ...fakeAuthService, isAuthenticated: true });
         setIsLoading(false);
         setFeedback(true);
-        // navigate("/home", { overwriteLastHistoryEntry: true });
         navigate("/home");
-        // redirect("/home");
       })
       .catch((error) => {
-        // if(error.response.status === 400){
+        // if(error.status === 400){
         //   setError("Please Enter correct Password");
         //   setFeedback(false);
         //   console.log(error);
@@ -61,11 +60,11 @@ const Login = () => {
         setFeedback(false);
         console.log(error.response);
         setIsLoading(false);
-        // setError(error.message);
-        setError(error.message);
+
+        setError("Passord/Network Error");
       });
   };
-
+  console.log("fake auth login", fakeAuthService.isAuthenticated);
   return (
     <div>
       <div className="bg-light overflow-hidden vh-100">
@@ -95,7 +94,7 @@ const Login = () => {
             <div
               className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
               role="status"
-              style={{ fontSize: 30, height: 100, width: 10 }}
+              style={{ fontSize: 30, height: 110, width: 110 }}
             ></div>
           </div>
         )}
