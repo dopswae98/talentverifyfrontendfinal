@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 import NavbarComponent from "../Components/NavbarComponent";
 
 const Dashboard = () => {
+  // localStorage.setItem("token", true);
   return (
     <div>
       <NavbarComponent />

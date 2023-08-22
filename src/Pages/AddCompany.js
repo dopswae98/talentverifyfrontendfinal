@@ -13,6 +13,7 @@ const AddCompany = () => {
     useContext(DataContext);
   const [query, setQuery] = useState("");
   const [addedFeedback, setAddedFeedback] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const [clearFormData, setClearFormData] = useState({
     name: "",
@@ -33,6 +34,7 @@ const AddCompany = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoader(true);
     console.log(formData);
     axios
       // .post("http://localhost:4000/send-email", formData)
@@ -42,6 +44,7 @@ const AddCompany = () => {
         console.log("formdata", formData);
         setAddedFeedback(true);
         setFormData(clearFormData);
+        setLoader(false);
       })
       .catch((error) => {
         console.log(error);
@@ -111,7 +114,16 @@ const AddCompany = () => {
   }, []);
 
   return (
-    <div className="bg-light overflow-hidden container-xxl">
+    <div className="bg-light overflow-hidden position-relative">
+      {loader && (
+        <div className="loader position-absolute h-100 top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div
+            className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+            role="status"
+            style={{ fontSize: 30, height: 110, width: 110 }}
+          ></div>
+        </div>
+      )}
       <NavbarComponent />
       <h1 className="fw-bold text-center text-success pt-4">Add Company</h1>
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
@@ -256,7 +268,7 @@ const AddCompany = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label htmlFor="employees" className="form-label">
                   Employees
                 </label>
@@ -268,7 +280,7 @@ const AddCompany = () => {
                   value={formData.employees}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email Address

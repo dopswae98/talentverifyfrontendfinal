@@ -9,22 +9,30 @@ import FooterComponent from "../Components/FooterComponent";
 
 const AddEmployee = () => {
   const [companies, setCompanies] = useState([]);
-  const { message, formData, setFormData, setCompanyDetails } =
-    useContext(DataContext);
+  const { message, setCompanyDetails } = useContext(DataContext);
   const [query, setQuery] = useState("");
   const [addedFeedback, setAddedFeedback] = useState(null);
+  const [loader, setLoader] = useState(false);
+  // const [formData, setFormData] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    employee_id_number: "",
+    department: "",
+    role: "",
+    date_started: "",
+    date_left: "",
+    duties: "",
+  });
 
   const [clearFormData, setClearFormData] = useState({
     name: "",
-    date_of_registration: "",
-    company_registration_number: "",
-    address: "",
-    contact_person: "",
-    departments: "",
-    num_employees: "",
-    employees: "",
-    contact_phone: "",
-    email: "",
+    employee_id_number: "",
+    department: "",
+    role: "",
+    date_started: "",
+    date_left: "",
+    duties: "",
   });
 
   const handleChange = (event) => {
@@ -33,19 +41,22 @@ const AddEmployee = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoader(true);
     console.log(formData);
     axios
       // .post("http://localhost:4000/send-email", formData)
-      .post("https://talentbackend.onrender.com/companies/", formData)
+      .post("https://talentbackend.onrender.com/employees/", formData)
       .then((response) => {
         console.log(response);
         console.log("formdata", formData);
         setAddedFeedback(true);
         setFormData(clearFormData);
+        setLoader(false);
       })
       .catch((error) => {
         console.log(error);
         setAddedFeedback(false);
+        setLoader(false);
       });
     api();
   };
@@ -53,7 +64,7 @@ const AddEmployee = () => {
   const deleteCompany = (id) => {
     console.log(id);
     axios
-      .delete(`https://talentbackend.onrender.com/companies/${id}`, {
+      .delete(`https://talentbackend.onrender.com/employees/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -76,7 +87,7 @@ const AddEmployee = () => {
 
   const api = () =>
     axios
-      .get(`https://talentbackend.onrender.com/companies/`)
+      .get(`https://talentbackend.onrender.com/employees/`)
       .then((response) => {
         setCompanies(response.data);
         console.log(response.data);
@@ -111,7 +122,16 @@ const AddEmployee = () => {
   }, []);
 
   return (
-    <div className="bg-light overflow-hidden container-xxl">
+    <div className="position-relative bg-light overflow-hidden ">
+      {loader && (
+        <div className="loader position-absolute h-100 top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div
+            className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+            role="status"
+            style={{ fontSize: 30, height: 110, width: 110 }}
+          ></div>
+        </div>
+      )}
       <NavbarComponent />
       <h1 className="fw-bold text-center text-success pt-4">Add Employee</h1>
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
@@ -132,7 +152,6 @@ const AddEmployee = () => {
             {addedFeedback === true
               ? "Record Added Successfully"
               : "An Error Occurred while Adding"}
-            Successfully
           </span>
           <button
             type="button"
@@ -162,123 +181,81 @@ const AddEmployee = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="dateRegistered" className="form-label">
-                  Date Registered
+                <label htmlFor="employee_id_number" className="form-label">
+                  Employee ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="employee_id_number"
+                  name="employee_id_number"
+                  value={formData.employee_id_number}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="department" className="form-label">
+                  Department
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="department"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="role" className="form-label">
+                  Role
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="date_started" className="form-label">
+                  Date Started
                 </label>
                 <input
                   type="date"
                   className="form-control"
-                  id="dateRegistered"
-                  name="date_of_registration"
-                  value={formData.date_of_registration}
+                  id="date_started"
+                  name="date_started"
+                  value={formData.date_started}
                   onChange={handleChange}
                 />
               </div>
               <div className="mb-3">
-                <label
-                  htmlFor="companyRegistrationNumber"
-                  className="form-label"
-                >
-                  Company Registration Number
+                <label htmlFor="date_left" className="form-label">
+                  Date Left
                 </label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
-                  id="companyRegistrationNumber"
-                  name="company_registration_number"
-                  value={formData.company_registration_number}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="address" className="form-label">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="contactPerson" className="form-label">
-                  Contact Person
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="contactPerson"
-                  name="contact_person"
-                  value={formData.contact_person}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="contactPhone" className="form-label">
-                  Contact Phone
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="contactPhone"
-                  name="contact_phone"
-                  value={formData.contact_phone}
+                  id="date_left"
+                  name="date_left"
+                  value={formData.date_left}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="mb-3">
-                <label htmlFor="listOfDepartments" className="form-label">
-                  List Of departments
+                <label htmlFor="duties" className="form-label">
+                  Duties
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="listOfDepartments"
-                  name="departments"
-                  value={formData.departments}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="numberOfEmployees" className="form-label">
-                  Number of Employees
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="numberOfEmployees"
-                  name="num_employees"
-                  value={formData.num_employees}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="employees" className="form-label">
-                  Employees
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="employees"
-                  name="employees"
-                  value={formData.employees}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                  id="duties"
+                  name="duties"
+                  value={formData.duties}
                   onChange={handleChange}
                 />
               </div>

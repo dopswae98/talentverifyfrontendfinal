@@ -14,6 +14,7 @@ const EmployeeList = () => {
   const [query, setQuery] = useState("a");
   const [table_loader, setTable_loader] = useState(true);
   const [addedFeedback, setAddedFeedback] = useState(null);
+  
 
   const [clearFormData, setClearFormData] = useState({
     name: "",
@@ -64,6 +65,7 @@ const EmployeeList = () => {
       .then((response) => {
         // setCompanies(response.data);
         console.log("response", response);
+
         api();
       })
       .catch((error) => {
@@ -107,8 +109,8 @@ const EmployeeList = () => {
       item.employee_id_number.toLowerCase().includes(query.toLowerCase()) ||
       item.department.toLowerCase().includes(query.toLowerCase()) ||
       item.role.toLowerCase().includes(query.toLowerCase()) ||
-      item.date_started.toLowerCase().includes(query.toLowerCase()) ||
-      item.date_left.toLowerCase().includes(query.toLowerCase()) ||
+      item.date_started.includes(query.toLowerCase()) ||
+      item.date_left.includes(query.toLowerCase()) ||
       // item.date_left.includes(query.toLowerCase()) ||
       item.duties.toLowerCase().includes(query.toLowerCase())
   );
@@ -137,11 +139,12 @@ const EmployeeList = () => {
 
   return (
     <div
-      className=" relative bg-light overflow-hidden vw-100 vw-md-auto container-xxls"
+      className=" relative bg-light overflow-hidden  container-xxls"
       style={{ minHeight: "100vh" }}
     >
       <NavbarComponent />
       {/* <h1>Company List</h1> */}
+
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
       {table_loader && (
         <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
@@ -231,7 +234,7 @@ const EmployeeList = () => {
 
                   <td>
                     <Link
-                      className=""
+                      className="fw-bold"
                       to={`/home/employeeslist/${company.id}`}
                       onClick={() => EditCompany(company)}
                       style={{ textDecoration: "none", color: "black" }}
@@ -239,7 +242,7 @@ const EmployeeList = () => {
                       Edit
                     </Link>
                     <button
-                      className=" text-white bg-danger ms-1 rounded p-1"
+                      className="delete_button fw-bold text-white bg-danger ms-2 rounded py-1 px-3"
                       onClick={() => deleteCompany(company.id)}
                     >
                       Delete

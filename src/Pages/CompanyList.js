@@ -235,7 +235,7 @@ const CompanyList = () => {
                       Edit
                     </Link>
                     <button
-                      className=" text-white bg-danger ms-1 rounded p-1"
+                      className="delete_button fw-bold text-white bg-danger ms-1 rounded pt-1 px-3"
                       onClick={() => deleteCompany(company.id)}
                     >
                       Delete

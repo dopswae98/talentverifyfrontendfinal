@@ -1,29 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { DataContext } from "./TheContext";
 import logo from "../Images/talentlogo.png";
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
-  const { fakeAuthService, setFakeAuthService } = useContext(DataContext);
+  const { fakeAuthService, setFakeAuthService, logoutAll, setToken } =
+    useContext(DataContext);
   const [auth, setAuth] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
- 
+  useEffect(() => {
+    // localStorage.setItem("token", logoutAll);
+  }, []);
+
   const handleLogout = () => {
-    
+    localStorage.setItem("token", false);
     fakeAuthService["isAuthenticated"] = false;
     setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
-
-  
-    
+    setToken(false);
     console.log("logged out");
     console.log("fake auth", fakeAuthService.isAuthenticated);
-  
-    if (
-      !fakeAuthService.isAuthenticated 
-      
-    ) {
+
+    if (!fakeAuthService.isAuthenticated) {
       return <Navigate to="/login" replace={true} />;
     }
   };
@@ -33,7 +32,6 @@ const NavbarComponent = () => {
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container">
           <Link className="logo navbar-brand" to="/home">
-            
             <span className="">
               <img src={logo} alt="logo" height={47} width={47} />
             </span>
@@ -42,9 +40,7 @@ const NavbarComponent = () => {
             </span>
           </Link>
           <div className="acc-cart-center position-relative ms-3">
-           
             <i className="fa-regular "></i>
-           
           </div>
           <button
             className="navbar-toggler"
@@ -145,9 +141,8 @@ const NavbarComponent = () => {
             </div>
 
             <div className="acc-cart position-relative ms-3">
-             
               <i className="fa-regular "></i>
-              
+
               <span className="ms-1"></span>
             </div>
           </div>

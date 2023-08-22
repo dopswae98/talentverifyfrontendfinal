@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,13 +10,14 @@ const DataContextProvider = ({ children }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [logoutAll, setLogoutAll] = useState(false);
   const navigate = useNavigate();
 
   const [companies, setCompanies] = useState([]);
   const [companyDetails, setCompanyDetails] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState([]);
   const [auth, setAuth] = useState({ token: false });
-  const [token, setToken] = useState(true);
+  const [token, setToken] = useState(false);
   const [table_loader, setTable_loader] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -64,6 +65,12 @@ const DataContextProvider = ({ children }) => {
         console.error(error);
       });
 
+  useEffect(() => {
+    // const x = localStorage.setItem("token", token);
+    setToken(localStorage.getItem("token"));
+    console.log("Ultimate token", token);
+  }, [localStorage.getItem("token")]);
+
   const [fakeAuthService, setFakeAuthService] = useState({
     isAuthenticated: localStorage.getItem("token"),
     login(callback) {
@@ -76,9 +83,8 @@ const DataContextProvider = ({ children }) => {
     },
   });
 
-  localStorage.setItem("token", token);
   const login = (token) => {
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", true);
     setIsAuthenticated(true);
     navigate("/home"); // Redirect to private route after login
   };
@@ -110,6 +116,10 @@ const DataContextProvider = ({ children }) => {
     setEmployeeDetails,
     companiesApi,
     table_loader,
+    logoutAll,
+    setLogoutAll,
+    token,
+    setToken,
   };
 
   return (

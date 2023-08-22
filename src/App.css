@@ -3,6 +3,7 @@
 
 * {
   font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
 }
 
 textarea:focus,
@@ -49,6 +50,12 @@ Link {
   color: rgb(4, 119, 98) !important;
 }
 
+.delete_button {
+  background: linear-gradient(rgb(148, 1, 1), rgb(148, 1, 1)) padding-box,
+    linear-gradient(to right, rgb(100, 200, 234), darkorchid) border-box;
+  border-radius: 50em;
+  border: 4px solid transparent;
+}
 form .search {
   height: 40px;
   width: 42px;

@@ -2,15 +2,22 @@
 //if true he will be redirected to home page else he
 //will be redirected back to login
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import { DataContext } from "./TheContext";
 
 function PrivateRoute({ element }) {
-  const { fakeAuthService } = useContext(DataContext);
+  const { fakeAuthService, token } = useContext(DataContext);
   console.log("fake auth private", fakeAuthService.isAuthenticated);
-  if (!fakeAuthService.isAuthenticated) {
+
+  
+
+  if (
+    
+    !fakeAuthService.isAuthenticated
+  ) {
+    
     return <Navigate to="/" replace />;
   }
 

@@ -5,7 +5,8 @@ import { DataContext } from "../Components/TheContext";
 import logo from "../Images/talentlogo.png";
 
 const Login = () => {
-  const { fakeAuthService, setFakeAuthService } = useContext(DataContext);
+  const { fakeAuthService, setFakeAuthService, setToken, token } =
+    useContext(DataContext);
 
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState(null);
@@ -24,6 +25,7 @@ const Login = () => {
     // login page even if he enters manually a private route
     //so that when he logs out and presses back it will not enter a private route
     setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
+    console.log("auth staus", fakeAuthService.isAuthenticated);
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +50,9 @@ const Login = () => {
         setIsLoading(false);
         setFeedback(true);
         navigate("/home");
+        // localStorage.setItem("token", true);
+        setToken(true);
+        console.log("tokkkennn",token);
       })
       .catch((error) => {
         // if(error.status === 400){
@@ -61,7 +66,7 @@ const Login = () => {
         console.log(error.response);
         setIsLoading(false);
 
-        setError("Passord/Network Error");
+        setError("Password/Network Error");
       });
   };
   console.log("fake auth login", fakeAuthService.isAuthenticated);

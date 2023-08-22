@@ -3,10 +3,14 @@ import { useParams } from "react-router-dom";
 import TableComponent from "../Components/TableComponent";
 import { DataContext } from "../Components/TheContext";
 import axios from "axios";
+import NavbarComponent from "../Components/NavbarComponent";
 
 const EditEmployee = () => {
   const { message, companies, setCompanies, companyDetails } =
     useContext(DataContext);
+  const [loader, setLoader] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+
   const [formData, setFormData] = useState({ ...companyDetails });
   //   const formData = companyDetails;
   const { employeeid } = useParams();
@@ -14,8 +18,10 @@ const EditEmployee = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   console.log(employeeid);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoader(true);
     console.log(formData);
     axios
       // .post("http://localhost:4000/send-email", formData)
@@ -26,13 +32,17 @@ const EditEmployee = () => {
       .then((response) => {
         console.log(response);
         console.log("formdata", formData);
+        setLoader(false);
+        setFeedback(true);
       })
       .catch((error) => {
         console.log(error);
+        setLoader(false);
+        setFeedback(false);
       });
     const api = () =>
       axios
-        .get(`https://talentbackend.onrender.com/companies/`)
+        .get(`https://talentbackend.onrender.com/employees/`)
         .then((response) => {
           setCompanies(response.data);
           console.log(response.data);
@@ -43,8 +53,41 @@ const EditEmployee = () => {
   };
   console.log(formData);
   return (
-    <div className="text-center py-5" style={{ overflowX: "hidden" }}>
-      <h1>Edit Company Details</h1>
+    <div
+      className="text-center pb-5 position-relative"
+      style={{ overflowX: "hidden" }}
+    >
+      {loader && (
+        <div className="loader position-absolute h-100 top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div
+            className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
+            role="status"
+            style={{ fontSize: 30, height: 110, width: 110 }}
+          ></div>
+        </div>
+      )}
+      <NavbarComponent />
+      <div
+        className={
+          feedback === true
+            ? "alert alert-success alert-dismissible fade show container mt-5 visible"
+            : feedback === false
+            ? "alert alert-danger alert-dismissible fade show container mt-5 text-center visible"
+            : "invisible alert alert-success alert-dismissible fade show container mt-5"
+        }
+        role="alert"
+      >
+        <span className="fw-bold ms-1">
+          {feedback ? "Update Successfully" : `An Error Occurred`}
+        </span>
+        <button
+          type="button"
+          className="btn-close d-none"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <h1 className="mt-5 fw-bold text-success">Edit Employee Details</h1>
       <p>{message}</p>
       <p>{formData.name}</p>
       {/* <TableComponent /> */}
