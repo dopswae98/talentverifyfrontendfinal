@@ -13,7 +13,6 @@ const DataContextProvider = ({ children }) => {
 
   const [auth, setAuth] = useState({ token: false });
   const [addmodal, setAddmodal] = useState(false);
-  // const [isauthenticated, setIsAuthenticated] = useState(second)
 
   const [fakeAuthService, setFakeAuthService] = useState({
     isAuthenticated: true,
@@ -40,8 +39,6 @@ const DataContextProvider = ({ children }) => {
   };
 
   const contextValue = {
-    message: "Hello, Context!",
-
     auth,
     setAuth,
     login,
@@ -50,7 +47,6 @@ const DataContextProvider = ({ children }) => {
     logout,
     fakeAuthService,
     setFakeAuthService,
-
     addmodal,
     setAddmodal,
     todoDetailsModal,

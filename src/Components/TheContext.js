@@ -66,7 +66,6 @@ const DataContextProvider = ({ children }) => {
       });
 
   useEffect(() => {
-    // const x = localStorage.setItem("token", token);
     setToken(localStorage.getItem("token"));
     console.log("Ultimate token", token);
   }, [localStorage.getItem("token")]);

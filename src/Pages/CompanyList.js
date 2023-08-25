@@ -6,6 +6,7 @@ import NavbarComponent from "../Components/NavbarComponent";
 import SearchComponent from "../Components/SearchComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FooterComponent from "../Components/FooterComponent";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const CompanyList = () => {
   const [companies, setCompanies] = useState([]);
@@ -14,6 +15,8 @@ const CompanyList = () => {
   const [query, setQuery] = useState("");
   const [addedFeedback, setAddedFeedback] = useState(null);
   const [table_loader, setTable_loader] = useState(true);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(true);
 
   const [clearFormData, setClearFormData] = useState({
     name: "",
@@ -51,10 +54,18 @@ const CompanyList = () => {
     api();
   };
 
+  const handleDeleteModal = (id) => {
+    setDeleteModal(true);
+    setIdToDelete(id);
+    console.log("id to delete", idToDelete);
+  };
+
   const deleteCompany = (id) => {
-    console.log(id);
+    console.log("id to delete", idToDelete);
+    setTable_loader(true);
+    setDeleteModal(false);
     axios
-      .delete(`https://talentbackend.onrender.com/companies/${id}`, {
+      .delete(`https://talentbackend.onrender.com/companies/${idToDelete}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -64,10 +75,12 @@ const CompanyList = () => {
       .then((response) => {
         // setCompanies(response.data);
         console.log("response", response);
+        setTable_loader(false);
         api();
       })
       .catch((error) => {
         console.error(error);
+        setTable_loader(false);
       });
   };
   const EditCompany = (company) => {
@@ -127,13 +140,52 @@ const CompanyList = () => {
   useEffect(() => {
     api();
     // handleSearch();
-  }, [api]);
+  }, []);
 
   return (
     <div
       className="relative bg-light overflow-hidden position-relative"
       style={{ minHeight: "100vh" }}
     >
+      {deleteModal && (
+        <div className="delete_modal box_shadow3 position-absolute top-0  container  right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div className="row w-100 h-25s" style={{ height: 200 }}>
+            <div className="col-md-6 mx-auto position-relative bg-white box_shadow3 rounded md:rounded-pill">
+              <div
+                className="position-absolute d-flex align-items-center justify-content-center top-3 end-0 me-2 md:me-5 text-white rounded-circle bg-danger right-0 fw-bold text-warning"
+                style={{
+                  width: 40,
+                  height: 40,
+                  top: 4,
+                  cursor: "pointer",
+                }}
+                onClick={() => setDeleteModal(false)}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </div>
+              <div className="d-flex flex-column align-items-center h-100 justify-content-center">
+                <p className="fw-bold fs-3 ms-3 md:ms-0">
+                  Are you sure you want to delete this record?
+                </p>
+                <div className="buttons d-flex gap-5">
+                  <button
+                    className="btn btn-outline-info rounded-pill px-5 fw-bold fs-5"
+                    onClick={() => setDeleteModal(false)}
+                  >
+                    No
+                  </button>
+                  <button
+                    className="btn btn-danger rounded-pill px-5 fw-bold fs-5"
+                    onClick={() => deleteCompany()}
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {table_loader && (
         <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
           <div
@@ -236,7 +288,7 @@ const CompanyList = () => {
                     </Link>
                     <button
                       className="delete_button fw-bold text-white bg-danger ms-1 rounded pt-1 px-3"
-                      onClick={() => deleteCompany(company.id)}
+                      onClick={() => handleDeleteModal(company.id)}
                     >
                       Delete
                     </button>

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "../Components/TheContext";
 import logo from "../Images/talentlogo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { fakeAuthService, setFakeAuthService, setToken, token } =
@@ -52,7 +54,7 @@ const Login = () => {
         navigate("/home");
         // localStorage.setItem("token", true);
         setToken(true);
-        console.log("tokkkennn",token);
+        console.log("tokkkennn", token);
       })
       .catch((error) => {
         // if(error.status === 400){
@@ -103,6 +105,7 @@ const Login = () => {
             ></div>
           </div>
         )}
+
         <h1 className="fw-bold text-center mt-3">
           <span className="me-2">
             <img src={logo} alt="logo" height={47} width={47} />

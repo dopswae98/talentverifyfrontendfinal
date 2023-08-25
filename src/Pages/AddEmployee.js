@@ -165,7 +165,7 @@ const AddEmployee = () => {
             <form action="" method="POST" onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">
-                  Company Name
+                  Employee Name
                 </label>
                 <input
                   type="text"

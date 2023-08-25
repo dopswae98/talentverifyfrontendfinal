@@ -144,7 +144,6 @@ const AddCompany = () => {
             {addedFeedback === true
               ? "Record Added Successfully"
               : "An Error Occurred while Adding"}
-            Successfully
           </span>
           <button
             type="button"

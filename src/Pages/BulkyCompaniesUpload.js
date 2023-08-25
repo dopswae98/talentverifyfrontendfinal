@@ -78,8 +78,8 @@ const BulkyCompaniesUpload = () => {
         }
         role="alert"
       >
-        File Uploaded
-        <span className="fw-bold ms-1">Successfully</span>
+        
+        <span className="fw-bold ms-1">File Uploaded Successfully</span>
         <button
           type="button"
           className="btn-close d-none"
