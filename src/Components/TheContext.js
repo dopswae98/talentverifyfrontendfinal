@@ -32,16 +32,7 @@ const DataContextProvider = ({ children }) => {
     contact_phone: "",
     email: "",
   });
-  const employeesApi = () =>
-    axios
-      .get(`https://talentbackend.onrender.com/employees/`)
-      .then((response) => {
-        setEmployeeDetails(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+
   const companiesApi = () =>
     axios
       .get(`https://talentbackend.onrender.com/companies/`)
@@ -64,11 +55,6 @@ const DataContextProvider = ({ children }) => {
       .catch((error) => {
         console.error(error);
       });
-
-  useEffect(() => {
-    setToken(localStorage.getItem("token"));
-    console.log("Ultimate token", token);
-  }, [localStorage.getItem("token")]);
 
   const [fakeAuthService, setFakeAuthService] = useState({
     isAuthenticated: localStorage.getItem("token"),

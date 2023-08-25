@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import NavbarComponent from "../Components/NavbarComponent";
 import FooterComponent from "../Components/FooterComponent";
-import { DataContext } from "../Components/TheContext";
 
 const BulkyEmployeesUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const { auth, setAuth } = useContext(DataContext);
   const [loader, setLoader] = useState(false);
 
   const handleFileUpload = (event) => {
@@ -22,7 +20,6 @@ const BulkyEmployeesUpload = () => {
 
     try {
       await axios.post(
-        // "https://talentbackend.onrender.com/api/employee_upload_csv/",
         "https://talentbackend.onrender.com/api/employee_upload_csv/",
         formData,
         {
@@ -31,7 +28,7 @@ const BulkyEmployeesUpload = () => {
           },
         }
       );
-      console.log("CSV file uploaded successfully");
+      //file uploaded successfully
       setFeedback(true);
       setLoader(false);
     } catch (error) {
@@ -40,17 +37,6 @@ const BulkyEmployeesUpload = () => {
       setLoader(false);
     }
   };
-  useEffect(() => {
-    // const auth = { token: false };
-    setAuth({ token: true });
-    const resetAuth = () => {
-      //   setAuth({ token: false });
-    };
-    // return () => {
-    resetAuth();
-    console.log("auth", auth.token);
-    // };
-  }, []);
 
   return (
     <div className="text-center lesscontent vh-100 position-relative">

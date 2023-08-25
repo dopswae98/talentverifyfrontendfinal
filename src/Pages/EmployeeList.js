@@ -3,65 +3,24 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { DataContext } from "../Components/TheContext";
 import NavbarComponent from "../Components/NavbarComponent";
-import SearchComponent from "../Components/SearchComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FooterComponent from "../Components/FooterComponent";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const EmployeeList = () => {
   const [companies, setCompanies] = useState([]);
-  const { message, formData, setFormData, setCompanyDetails } =
-    useContext(DataContext);
+  const { setCompanyDetails } = useContext(DataContext);
   const [query, setQuery] = useState("a");
   const [table_loader, setTable_loader] = useState(true);
-  const [addedFeedback, setAddedFeedback] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const [idToDelete, setIdToDelete] = useState(true);
-
-  const [clearFormData, setClearFormData] = useState({
-    name: "",
-    date_of_registration: "",
-    company_registration_number: "",
-    address: "",
-    contact_person: "",
-    departments: "",
-    num_employees: "",
-    employees: "",
-    contact_phone: "",
-    email: "",
-  });
-
-  const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-    axios
-      // .post("http://localhost:4000/send-email", formData)
-      .post("https://talentbackend.onrender.com/companies/", formData)
-      .then((response) => {
-        console.log(response);
-        console.log("formdata", formData);
-        setAddedFeedback(true);
-        setFormData(clearFormData);
-      })
-      .catch((error) => {
-        console.log(error);
-        setAddedFeedback(false);
-      });
-    api();
-  };
 
   const handleDeleteModal = (id) => {
     setDeleteModal(true);
     setIdToDelete(id);
-    console.log("id to delete", idToDelete);
   };
 
   const deleteCompany = () => {
-    console.log("id to delete", idToDelete);
     setTable_loader(true);
     setDeleteModal(false);
     axios
@@ -73,8 +32,6 @@ const EmployeeList = () => {
         },
       })
       .then((response) => {
-        // setCompanies(response.data);
-        console.log("response", response);
         setTable_loader(false);
         api();
       })
@@ -85,7 +42,6 @@ const EmployeeList = () => {
   };
   const EditCompany = (company) => {
     setCompanyDetails(company);
-    console.log("compantDetails", company);
   };
 
   const api = () =>
@@ -93,26 +49,12 @@ const EmployeeList = () => {
       .get(`https://talentbackend.onrender.com/employees`)
       .then((response) => {
         setCompanies(response.data);
-        console.log(response.data);
+
         setTable_loader(false);
       })
       .catch((error) => {
         console.error(error);
       });
-
-  // const handleSearch = (e) => {
-  //   setQuery(e.target.value);
-  //   console.log(query);
-  //   const searchedProducts = companies.filter((item) =>
-  //     item.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-  //   setCompanies(searchedProducts);
-  //   console.log(searchedProducts);
-  // };
-  const handleSearch = (e) => {
-    setQuery(e.target.value);
-    console.log(query);
-  };
 
   const searchedProducts = companies.filter(
     (item) =>
@@ -122,20 +64,9 @@ const EmployeeList = () => {
       item.role.toLowerCase().includes(query.toLowerCase()) ||
       item.date_started.includes(query.toLowerCase()) ||
       item.date_left.includes(query.toLowerCase()) ||
-      // item.date_left.includes(query.toLowerCase()) ||
       item.duties.toLowerCase().includes(query.toLowerCase())
   );
-  // date_of_registration: "",
-  //   company_registration_number: "",
-  //   address: "",
-  //   contact_person: "",
-  //   departments: "",
-  //   num_employees: "",
-  //   employees: "",
-  //   contact_phone: "",
-  //   email:
-  // setCompanies(searchedProducts);
-  // console.log(searchedProducts);
+
   if (deleteModal) {
     document.documentElement.style.overflowY = "hidden";
   } else {
@@ -143,14 +74,7 @@ const EmployeeList = () => {
   }
   useEffect(() => {
     api();
-    // handleSearch();
   }, []);
-
-  // if (formData === undefined || null) {
-  //   setLoading(true);
-  // } else {
-  //   setLoading(false);
-  // }
 
   return (
     <div
@@ -158,7 +82,6 @@ const EmployeeList = () => {
       style={{ minHeight: "100vh" }}
     >
       <NavbarComponent />
-      {/* <h1>Company List</h1> */}
 
       {deleteModal && (
         <div className="delete_modal box_shadow3 position-absolute vw-100 vh-100 top-0 containers right-0 left-0 bottom-0 d-flex justify-content-center add_modal align-items-center">
@@ -199,8 +122,6 @@ const EmployeeList = () => {
           </div>
         </div>
       )}
-
-      {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
       {table_loader && (
         <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal h-100 w-100 align-items-center">
           <div
@@ -219,13 +140,6 @@ const EmployeeList = () => {
                 role="search"
               >
                 <div className="left_search d-flex w-100 justify-content-center flex-grow align-items-center">
-                  {/* <FontAwesomeIcon
-                className="ms-2"
-                icon="fa-search"
-                color="black"
-                width={25}
-                height={25}
-              /> */}
                   <input
                     className="search-input form-control me-2 bg-transparent border-0 outline-none"
                     type="search"
@@ -233,21 +147,15 @@ const EmployeeList = () => {
                     aria-label="Search"
                     onChange={(e) => {
                       setQuery(e.target.value);
-                      console.log(query);
                     }}
                   />
                 </div>
                 <div>
                   <button
                     className="search btn btn-outline-danger"
-                    // onClick={handleSearch}
                     type="submit"
                   >
-                    <FontAwesomeIcon
-                      icon="fa-search"
-                      color="black"
-                      // onClick={handleCart}
-                    />
+                    <FontAwesomeIcon icon="fa-search" color="black" />
                   </button>
                 </div>
               </form>

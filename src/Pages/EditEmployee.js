@@ -12,31 +12,24 @@ const EditEmployee = () => {
   const [feedback, setFeedback] = useState(null);
 
   const [formData, setFormData] = useState({ ...companyDetails });
-  //   const formData = companyDetails;
   const { employeeid } = useParams();
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  console.log(employeeid);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoader(true);
-    console.log(formData);
     axios
-      // .post("http://localhost:4000/send-email", formData)
       .put(
         "https://talentbackend.onrender.com/employees/" + employeeid + "/",
         formData
       )
       .then((response) => {
-        console.log(response);
-        console.log("formdata", formData);
         setLoader(false);
         setFeedback(true);
       })
       .catch((error) => {
-        console.log(error);
         setLoader(false);
         setFeedback(false);
       });
@@ -45,13 +38,14 @@ const EditEmployee = () => {
         .get(`https://talentbackend.onrender.com/employees/`)
         .then((response) => {
           setCompanies(response.data);
-          console.log(response.data);
+          setFeedback(true);
         })
         .catch((error) => {
           console.error(error);
+          setFeedback(false);
         });
   };
-  console.log(formData);
+
   return (
     <div
       className="text-center pb-5 position-relative"
@@ -90,7 +84,6 @@ const EditEmployee = () => {
       <h1 className="mt-5 fw-bold text-success">Edit Employee Details</h1>
       <p>{message}</p>
       <p>{formData.name}</p>
-      {/* <TableComponent /> */}
       <div className="edit-section">
         <div className="form py-5">
           <div className="row">

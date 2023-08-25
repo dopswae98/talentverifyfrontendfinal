@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "../Components/TheContext";
 import logo from "../Images/talentlogo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { fakeAuthService, setFakeAuthService, setToken, token } =
@@ -23,11 +21,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    //initialise isAuthenticated: false so that the user will always be redirected to the
-    // login page even if he enters manually a private route
-    //so that when he logs out and presses back it will not enter a private route
     setFakeAuthService({ ...fakeAuthService, isAuthenticated: false });
-    console.log("auth staus", fakeAuthService.isAuthenticated);
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -52,26 +46,18 @@ const Login = () => {
         setIsLoading(false);
         setFeedback(true);
         navigate("/home");
-        // localStorage.setItem("token", true);
+
         setToken(true);
-        console.log("tokkkennn", token);
       })
       .catch((error) => {
-        // if(error.status === 400){
-        //   setError("Please Enter correct Password");
-        //   setFeedback(false);
-        //   console.log(error);
-        //   setIsLoading(false);
-        // }
-        // setError(error);
         setFeedback(false);
-        console.log(error.response);
+
         setIsLoading(false);
 
         setError("Password/Network Error");
       });
   };
-  console.log("fake auth login", fakeAuthService.isAuthenticated);
+
   return (
     <div>
       <div className="bg-light overflow-hidden vh-100">

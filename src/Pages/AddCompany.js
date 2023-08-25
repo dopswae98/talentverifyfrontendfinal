@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { DataContext } from "../Components/TheContext";
 import NavbarComponent from "../Components/NavbarComponent";
-import SearchComponent from "../Components/SearchComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FooterComponent from "../Components/FooterComponent";
 
 const AddCompany = () => {
@@ -35,46 +32,19 @@ const AddCompany = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoader(true);
-    console.log(formData);
+
     axios
-      // .post("http://localhost:4000/send-email", formData)
+
       .post("https://talentbackend.onrender.com/companies/", formData)
       .then((response) => {
-        console.log(response);
-        console.log("formdata", formData);
         setAddedFeedback(true);
         setFormData(clearFormData);
         setLoader(false);
       })
       .catch((error) => {
-        console.log(error);
         setAddedFeedback(false);
       });
     api();
-  };
-
-  const deleteCompany = (id) => {
-    console.log(id);
-    axios
-      .delete(`https://talentbackend.onrender.com/companies/${id}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        // setCompanies(response.data);
-        console.log("response", response);
-        api();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const EditCompany = (company) => {
-    setCompanyDetails(company);
-    console.log("compantDetails", company);
   };
 
   const api = () =>
@@ -82,35 +52,13 @@ const AddCompany = () => {
       .get(`https://talentbackend.onrender.com/companies/`)
       .then((response) => {
         setCompanies(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
 
-  // const handleSearch = (e) => {
-  //   setQuery(e.target.value);
-  //   console.log(query);
-  //   const searchedProducts = companies.filter((item) =>
-  //     item.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-  //   setCompanies(searchedProducts);
-  //   console.log(searchedProducts);
-  // };
-  const handleSearch = (e) => {
-    setQuery(e.target.value);
-    console.log(query);
-  };
-
-  const searchedProducts = companies.filter((item) =>
-    item.name.toLowerCase().includes(query.toLowerCase())
-  );
-  // setCompanies(searchedProducts);
-  // console.log(searchedProducts);
-
   useEffect(() => {
     api();
-    // handleSearch();
   }, []);
 
   return (
@@ -267,19 +215,7 @@ const AddCompany = () => {
                   onChange={handleChange}
                 />
               </div>
-              {/* <div className="mb-3">
-                <label htmlFor="employees" className="form-label">
-                  Employees
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="employees"
-                  name="employees"
-                  value={formData.employees}
-                  onChange={handleChange}
-                />
-              </div> */}
+
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email Address

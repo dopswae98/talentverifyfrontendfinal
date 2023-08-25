@@ -6,7 +6,6 @@ import { DataContext } from "../Components/TheContext";
 const CSVUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const { auth, setAuth } = useContext(DataContext);
 
   const handleFileUpload = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -27,25 +26,14 @@ const CSVUploader = () => {
           },
         }
       );
-      console.log("CSV file uploaded successfully");
+      // console.log("CSV file uploaded successfully");
       setFeedback(true);
     } catch (error) {
       console.error(error);
       setFeedback(false);
     }
   };
-  useEffect(() => {
-    // const auth = { token: false };
-    setAuth({ token: true });
-    const resetAuth = () => {
-      //   setAuth({ token: false });
-    };
-    // return () => {
-    resetAuth();
-    console.log("auth", auth.token);
-    // };
-  }, []);
-
+  
   return (
     <div className="text-center">
       <section className="nav-section text-start mb-5">

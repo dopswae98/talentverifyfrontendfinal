@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import NavbarComponent from "../Components/NavbarComponent";
-import { DataContext } from "../Components/TheContext";
 import FooterComponent from "../Components/FooterComponent";
 
 const BulkyCompaniesUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const { auth, setAuth } = useContext(DataContext);
   const [loader, setLoader] = useState(false);
 
   const handleFileUpload = (event) => {
@@ -30,7 +28,7 @@ const BulkyCompaniesUpload = () => {
           },
         }
       );
-      console.log("CSV file uploaded successfully");
+
       setFeedback(true);
       setLoader(false);
     } catch (error) {
@@ -39,17 +37,6 @@ const BulkyCompaniesUpload = () => {
       setLoader(false);
     }
   };
-  useEffect(() => {
-    // const auth = { token: false };
-    setAuth({ token: true });
-    const resetAuth = () => {
-      //   setAuth({ token: false });
-    };
-    // return () => {
-    resetAuth();
-    console.log("auth", auth.token);
-    // };
-  }, []);
 
   return (
     <div
@@ -78,7 +65,6 @@ const BulkyCompaniesUpload = () => {
         }
         role="alert"
       >
-        
         <span className="fw-bold ms-1">File Uploaded Successfully</span>
         <button
           type="button"

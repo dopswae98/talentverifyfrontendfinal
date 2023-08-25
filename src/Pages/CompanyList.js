@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { DataContext } from "../Components/TheContext";
 import NavbarComponent from "../Components/NavbarComponent";
-import SearchComponent from "../Components/SearchComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FooterComponent from "../Components/FooterComponent";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -30,29 +29,6 @@ const CompanyList = () => {
     contact_phone: "",
     email: "",
   });
-
-  const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-    axios
-      // .post("http://localhost:4000/send-email", formData)
-      .post("https://talentbackend.onrender.com/companies/", formData)
-      .then((response) => {
-        console.log(response);
-        console.log("formdata", formData);
-        setAddedFeedback(true);
-        setFormData(clearFormData);
-      })
-      .catch((error) => {
-        console.log(error);
-        setAddedFeedback(false);
-      });
-    api();
-  };
 
   const handleDeleteModal = (id) => {
     setDeleteModal(true);
@@ -100,15 +76,6 @@ const CompanyList = () => {
         console.error(error);
       });
 
-  // const handleSearch = (e) => {
-  //   setQuery(e.target.value);
-  //   console.log(query);
-  //   const searchedProducts = companies.filter((item) =>
-  //     item.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-  //   setCompanies(searchedProducts);
-  //   console.log(searchedProducts);
-  // };
   const handleSearch = (e) => {
     setQuery(e.target.value);
     console.log(query);
@@ -128,17 +95,7 @@ const CompanyList = () => {
       item.email.toLowerCase().includes(query.toLowerCase()) ||
       item.contact_phone.includes(query)
   );
-  // date_of_registration: "",
-  //   company_registration_number: "",
-  //   address: "",
-  //   contact_person: "",
-  //   departments: "",
-  //   num_employees: "",
-  //   employees: "",
-  //   contact_phone: "",
-  //   email:
-  // setCompanies(searchedProducts);
-  // console.log(searchedProducts);
+
   if (deleteModal) {
     document.documentElement.style.overflowY = "hidden";
   } else {
@@ -146,7 +103,6 @@ const CompanyList = () => {
   }
   useEffect(() => {
     api();
-    // handleSearch();
   }, []);
 
   return (

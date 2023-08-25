@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { DataContext } from "../Components/TheContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
@@ -23,9 +22,6 @@ const SearchComponent = () => {
   }, []);
 
   const [query, setQuery] = useState("");
-  const [companiesData, setCompaniesData] = useState([]);
-  //   const { companies, setCompanies } = useContext(DataContext);
-  console.log("companies", companies);
 
   const handleSearch = (e) => {
     setQuery(e.target.value);
@@ -34,9 +30,7 @@ const SearchComponent = () => {
     );
     setCompanies(searchedProducts);
   };
-  //   if (query === "") {
-  //     setCompanies(companies);
-  //   }
+
   return (
     <div className="">
       <div className="row mx-1 mx-md-0">
@@ -46,13 +40,6 @@ const SearchComponent = () => {
             role="search"
           >
             <div className="left_search d-flex w-100 justify-content-center flex-grow align-items-center">
-              {/* <FontAwesomeIcon
-                className="ms-2"
-                icon="fa-search"
-                color="black"
-                width={25}
-                height={25}
-              /> */}
               <input
                 className="search-input form-control me-2 bg-transparent border-0 outline-none"
                 type="search"
@@ -67,11 +54,7 @@ const SearchComponent = () => {
                 onClick={handleSearch}
                 type="submit"
               >
-                <FontAwesomeIcon
-                  icon="fa-search"
-                  color="black"
-                  // onClick={handleCart}
-                />
+                <FontAwesomeIcon icon="fa-search" color="black" />
               </button>
             </div>
           </form>

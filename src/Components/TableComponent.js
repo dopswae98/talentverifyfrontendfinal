@@ -3,18 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const TableComponent = ({ EditCompany, deleteCompany, companies }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    date_of_registration: "",
-    company_registration_number: "",
-    address: "",
-    contact_person: "",
-    departments: "",
-    num_employees: "",
-    employees: "",
-    contact_phone: "",
-    email: "",
-  });
   return (
     <div>
       <table className="table text-center rounded" style={{ fontSize: 11 }}>
