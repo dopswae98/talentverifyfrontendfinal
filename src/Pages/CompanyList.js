@@ -119,6 +119,9 @@ const CompanyList = () => {
       item.name.toLowerCase().includes(query.toLowerCase()) ||
       item.date_of_registration.toLowerCase().includes(query.toLowerCase()) ||
       item.address.toLowerCase().includes(query.toLowerCase()) ||
+      item.company_registration_number
+        .toLowerCase()
+        .includes(query.toLowerCase()) ||
       item.date_of_registration.toLowerCase().includes(query.toLowerCase()) ||
       item.contact_person.toLowerCase().includes(query.toLowerCase()) ||
       item.departments.toLowerCase().includes(query.toLowerCase()) ||
@@ -136,7 +139,11 @@ const CompanyList = () => {
   //   email:
   // setCompanies(searchedProducts);
   // console.log(searchedProducts);
-
+  if (deleteModal) {
+    document.documentElement.style.overflowY = "hidden";
+  } else {
+    document.documentElement.style.overflowY = "auto";
+  }
   useEffect(() => {
     api();
     // handleSearch();
@@ -148,8 +155,8 @@ const CompanyList = () => {
       style={{ minHeight: "100vh" }}
     >
       {deleteModal && (
-        <div className="delete_modal box_shadow3 position-absolute top-0  container  right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
-          <div className="row w-100 h-25s" style={{ height: 200 }}>
+        <div className="delete_modal position-absolute overflow-hidden top-0 h-100s right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+          <div className="row w-100" style={{ height: 200 }}>
             <div className="col-md-6 mx-auto position-relative bg-white box_shadow3 rounded md:rounded-pill">
               <div
                 className="position-absolute d-flex align-items-center justify-content-center top-3 end-0 me-2 md:me-5 text-white rounded-circle bg-danger right-0 fw-bold text-warning"

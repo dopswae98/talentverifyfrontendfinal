@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import TableComponent from "../Components/TableComponent";
 import { DataContext } from "../Components/TheContext";
 import axios from "axios";
+import NavbarComponent from "../Components/NavbarComponent";
 
 const EditCompany = () => {
   const { message, companies, setCompanies, companyDetails } =
     useContext(DataContext);
+  const [feedback, setFeedback] = useState(null);
+
   const [formData, setFormData] = useState({ ...companyDetails });
   //   const formData = companyDetails;
   const { companyid } = useParams();
@@ -26,9 +29,11 @@ const EditCompany = () => {
       .then((response) => {
         console.log(response);
         console.log("formdata", formData);
+        setFeedback(true);
       })
       .catch((error) => {
         console.log(error);
+        setFeedback(false);
       });
     const api = () =>
       axios
@@ -42,12 +47,33 @@ const EditCompany = () => {
         });
   };
   return (
-    <div className="text-center py-5" style={{ overflowX: "hidden" }}>
-      <h1>Edit Company Details</h1>
+    <div className="text-center pb-5" style={{ overflowX: "hidden" }}>
+      <NavbarComponent />
+      <div
+        className={
+          feedback === true
+            ? "alert alert-success alert-dismissible fade show container mt-5 visible"
+            : feedback === false
+            ? "alert alert-danger alert-dismissible fade show container mt-5 text-center visible"
+            : "invisible alert alert-success alert-dismissible fade show container mt-5"
+        }
+        role="alert"
+      >
+        <span className="fw-bold ms-1">
+          {feedback ? "Update Successfully" : `An Error Occurred`}
+        </span>
+        <button
+          type="button"
+          className="btn-close d-none"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <h1 className="fw-bold">Edit Company Details</h1>
 
       <p>Hello {formData.name}</p>
       {/* <TableComponent /> */}
-      <div className="edit-section">
+      <div className="edit-section text-start">
         <div className="form py-5">
           <div className="row">
             <div className="col-md-7 mx-auto">
@@ -179,8 +205,11 @@ const EditCompany = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
-                  Submit
+                <button
+                  type="submit"
+                  className="btn btn-success w-100 rounded-0 fw-bold fs-4"
+                >
+                  Update
                 </button>
               </form>
             </div>

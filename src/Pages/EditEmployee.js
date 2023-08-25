@@ -196,7 +196,10 @@ const EditEmployee = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-success w-100 rounded-0 fw-bold fs-4"
+                >
                   Submit
                 </button>
               </form>

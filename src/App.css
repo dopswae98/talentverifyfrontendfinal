@@ -131,11 +131,13 @@ html {
 }
 .add_modal {
   background-color: #00000055;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   z-index: 10;
   top: 0px;
+  left: 0px;
+    bottom: 0;
   /* top: 65px; */
 }
 

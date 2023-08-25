@@ -136,7 +136,11 @@ const EmployeeList = () => {
   //   email:
   // setCompanies(searchedProducts);
   // console.log(searchedProducts);
-
+  if (deleteModal) {
+    document.documentElement.style.overflowY = "hidden";
+  } else {
+    document.documentElement.style.overflowY = "auto";
+  }
   useEffect(() => {
     api();
     // handleSearch();
@@ -150,14 +154,14 @@ const EmployeeList = () => {
 
   return (
     <div
-      className=" relative bg-light overflow-hidden  container-xxls"
+      className="position-relative bg-lights overflow-hidden"
       style={{ minHeight: "100vh" }}
     >
       <NavbarComponent />
       {/* <h1>Company List</h1> */}
 
       {deleteModal && (
-        <div className="delete_modal box_shadow3 position-absolute top-0  container  right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+        <div className="delete_modal box_shadow3 position-absolute vw-100 vh-100 top-0 containers right-0 left-0 bottom-0 d-flex justify-content-center add_modal align-items-center">
           <div className="row w-100 h-25s" style={{ height: 200 }}>
             <div className="col-md-6 mx-auto position-relative bg-white box_shadow3 rounded md:rounded-pill">
               <div
@@ -198,7 +202,7 @@ const EmployeeList = () => {
 
       {/* <SearchComponent companies={companies} setCompanies={setCompanies} /> */}
       {table_loader && (
-        <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal w-100 align-items-center">
+        <div className="loader position-absolute top-0 right-0 left-0 bottom-0 d-flex justify-content-center add_modal h-100 w-100 align-items-center">
           <div
             className="spinner-border bg-success text-warning fw-bold h1 fs-1s"
             role="status"
@@ -211,7 +215,7 @@ const EmployeeList = () => {
           <div className="row mx-1 mx-md-0">
             <div className="col-md-7 mx-auto px-0 bg-white rounded-pill">
               <form
-                className="d-flex justify-content-between align-items-center border border-0 border-2 border-top-0 border-start-0 border-end-0 mx-0"
+                className="box_shadow1 rounded-pill d-flex justify-content-between align-items-center border border-0 border-2 border-top-0 border-start-0 border-end-0 mx-0"
                 role="search"
               >
                 <div className="left_search d-flex w-100 justify-content-center flex-grow align-items-center">
